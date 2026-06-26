@@ -247,7 +247,7 @@ export default function BentoGrid() {
                 <h3 className="text-2xl font-bold text-[#172B36]">{FEATURES[0].title}</h3>
               </div>
               <div className="p-2 border border-[#114C5A]/10 bg-[#F1F6F4]">
-                <MeshIcon className="w-[18px] h-[18px] text-[#114C5A]" />
+                <SandboxIcon className="w-[18px] h-[18px] text-[#114C5A]" />
               </div>
             </div>
             
