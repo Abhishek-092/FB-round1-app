@@ -1,111 +1,171 @@
-:root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+@import "tailwindcss";
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+@theme {
+  --color-bg: #F1F6F4;
+  --color-surface: #D9E8E2;
+  --color-primary: #FFC801;
+  --color-secondary: #FF9932;
+  --color-dark-primary: #114C5A;
+  --color-dark-text: #172B36;
+  
+  --font-sans: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* Base custom definitions */
+@layer base {
+  html, body {
+    background-color: #F1F6F4;
+    color: #172B36;
+    scroll-behavior: smooth;
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Selection styling */
+  ::selection {
+    background-color: #114C5A;
+    color: #FFC801;
+  }
 
-  @media (max-width: 1024px) {
-    font-size: 16px;
+  /* Custom minimal luxury scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #F1F6F4;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #D9E8E2;
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #114C5A;
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+@layer utilities {
+  /* Premium noise overlay for paper-like aesthetic */
+  .grainy-bg {
+    position: relative;
+  }
+  .grainy-bg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.035;
+    pointer-events: none;
+    z-index: 10;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
   }
 
-  #social .button-icon {
-    filter: invert(1) brightness(2);
+  /* Editorial light bloom background */
+  .bg-bloom {
+    background: radial-gradient(circle 800px at var(--x, 50%) var(--y, 50%), rgba(217, 232, 226, 0.45), transparent 80%);
+  }
+
+  .accent-bloom {
+    background: radial-gradient(circle 400px at var(--x, 50%) var(--y, 50%), rgba(255, 200, 1, 0.08), rgba(255, 153, 50, 0.04), transparent 60%);
+  }
+
+  /* Magnetic button hover effect */
+  .magnetic-btn {
+    transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  .magnetic-btn:hover {
+    transform: scale(1.03) translateY(-2px);
+  }
+
+  /* Staggered entry animation */
+  .stagger-in {
+    opacity: 0;
+    transform: translateY(16px);
+    animation: fade-slide-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 }
 
-body {
-  margin: 0;
-}
-
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-}
-
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
-
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
+/* Native CSS Animations */
+@keyframes mask-slide {
+  from {
+    mask-position: 120% 0;
+  }
+  to {
+    mask-position: 0% 0;
   }
 }
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
+
+@keyframes fade-slide-up {
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
-p {
-  margin: 0;
+
+/* Custom CSS animations */
+.anim-delay-100 { animation-delay: 100ms; }
+.anim-delay-200 { animation-delay: 200ms; }
+.anim-delay-300 { animation-delay: 300ms; }
+.anim-delay-400 { animation-delay: 400ms; }
+.anim-delay-500 { animation-delay: 500ms; }
+
+/* Pulse connections */
+.pulse-connection {
+  stroke-dasharray: 8;
+  animation: dash 30s linear infinite;
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
+@keyframes dash {
+  to {
+    stroke-dashoffset: -1000;
+  }
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+/* Workflow pulse node styling */
+.node-active {
+  animation: pulse-border 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-border {
+  0%, 100% {
+    box-shadow: 0 0 0 0px rgba(255, 200, 1, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(255, 200, 1, 0);
+  }
+}
+
+/* Custom premium bento glow hover */
+.bento-glow-card {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bento-glow-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(180deg, rgba(255, 200, 1, 0.15), rgba(255, 153, 50, 0.05));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.5;
+  transition: opacity 0.35s ease;
+}
+
+.bento-glow-card:hover::before {
+  opacity: 1;
+  background: linear-gradient(135deg, rgba(255, 200, 1, 0.5), rgba(255, 153, 50, 0.2));
+}
+
+.bento-glow-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px -10px rgba(17, 76, 90, 0.08);
 }
