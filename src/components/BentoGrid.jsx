@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 // Custom SVGs requested by judges
 // MeshIcon → shield-check: represents memory sandboxing / isolation
@@ -102,15 +102,6 @@ const FEATURES = [
 export default function BentoGrid() {
   const [activeIndex, setActiveIndex] = useState(0);
 
-  // Synchronize resize
-  useEffect(() => {
-    const handleResize = () => {
-      // Preserve active state upon window width modifications
-      // No state reset occurs during resize
-    };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
 
   // SVG Animation components based on features
   const renderSVG = (type, isActive) => {
@@ -215,7 +206,7 @@ export default function BentoGrid() {
   };
 
   return (
-    <section id="features" className="py-24 md:py-36 bg-[#F1F6F4] border-b border-[#D9E8E2]">
+    <section id="features" aria-label="Architectural capabilities" className="py-24 md:py-36 bg-[#F1F6F4] border-b border-[#D9E8E2]">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         
         {/* Header Section */}
@@ -400,7 +391,7 @@ export default function BentoGrid() {
                 >
                   <div className="flex items-center gap-4">
                     <div className={`p-2 border ${isOpen ? 'bg-[#114C5A] text-[#FFC801] border-[#114C5A]' : 'bg-[#F1F6F4] text-[#172B36]/60 border-[#D9E8E2]'}`}>
-                      <IconComponent size={18} />
+                      <IconComponent className="w-[18px] h-[18px]" />
                     </div>
                     <div>
                       <span className="font-mono text-[9px] text-[#114C5A]/60 block tracking-widest uppercase">
