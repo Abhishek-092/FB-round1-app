@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 // Custom inline SVGs — contextually matched to each security feature
 
@@ -56,7 +56,7 @@ const SECURITY_ITEMS = [
   }
 ];
 
-export default function Security() {
+function Security() {
   return (
     <section id="security" aria-label="Security and compliance" className="py-24 md:py-36 bg-[#114C5A] text-[#F1F6F4] relative overflow-hidden">
       
@@ -129,3 +129,5 @@ export default function Security() {
     </section>
   );
 }
+
+export default memo(Security);
