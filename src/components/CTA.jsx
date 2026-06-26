@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 
-export default function CTA() {
+function CTA() {
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [nodeCount, setNodeCount] = useState(1402983);
@@ -75,6 +75,7 @@ export default function CTA() {
                 Check your inbox. We have sent the credentials to download and register your local V4 node agent.
               </p>
               <button
+                type="button"
                 onClick={() => setSubmitted(false)}
                 className="mt-4 px-4 py-2 border border-[#FFC801] text-[#FFC801] text-[10px] font-mono uppercase tracking-widest hover:bg-[#FFC801] hover:text-[#172B36] transition-all"
               >
@@ -130,3 +131,5 @@ export default function CTA() {
     </section>
   );
 }
+
+export default memo(CTA);
