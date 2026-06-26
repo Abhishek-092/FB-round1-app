@@ -65,7 +65,7 @@
 
   /* Magnetic button hover effect */
   .magnetic-btn {
-    transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+    transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
   }
   .magnetic-btn:hover {
     transform: scale(1.03) translateY(-2px);
@@ -76,6 +76,35 @@
     opacity: 0;
     transform: translateY(16px);
     animation: fade-slide-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  /* Marquee ticker edge fade mask */
+  .mask-reveal {
+    -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  }
+
+  /* Accessibility: screen reader only */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+  .focus\:not-sr-only:focus {
+    position: absolute;
+    width: auto;
+    height: auto;
+    padding: inherit;
+    margin: inherit;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
   }
 }
 
@@ -94,6 +123,12 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Marquee keyframes — centralized from Companies.jsx */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
 }
 
 /* Custom CSS animations */
@@ -133,7 +168,11 @@
 .bento-glow-card {
   position: relative;
   overflow: hidden;
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  /* Layout transitions: 300ms | Hover transitions: 200ms */
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.3s ease,
+              border-color 0.3s ease;
 }
 
 .bento-glow-card::before {
@@ -148,7 +187,7 @@
   mask-composite: exclude;
   pointer-events: none;
   opacity: 0.5;
-  transition: opacity 0.35s ease;
+  transition: opacity 0.2s ease, background 0.2s ease;
 }
 
 .bento-glow-card:hover::before {
@@ -190,4 +229,10 @@
 .logo-pulse {
   transform-origin: 50px 50px;
   animation: logo-pulse-center 4s ease-in-out infinite;
+}
+
+/* Focus-visible ring for accessibility — keyboard nav indicator */
+.focus-ring:focus-visible {
+  outline: 2px solid #FFC801;
+  outline-offset: 2px;
 }
