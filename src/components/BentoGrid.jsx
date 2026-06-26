@@ -386,8 +386,9 @@ export default function BentoGrid() {
                 {/* Accordion Header */}
                 <button
                   onClick={() => setActiveIndex(idx)}
-                  className="w-full p-6 flex items-center justify-between text-left focus:outline-none"
+                  className="w-full p-6 flex items-center justify-between text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#FFC801]"
                   aria-expanded={isOpen}
+                  aria-label={`${isOpen ? 'Collapse' : 'Expand'} ${feature.title}`}
                 >
                   <div className="flex items-center gap-4">
                     <div className={`p-2 border ${isOpen ? 'bg-[#114C5A] text-[#FFC801] border-[#114C5A]' : 'bg-[#F1F6F4] text-[#172B36]/60 border-[#D9E8E2]'}`}>
