@@ -42,12 +42,6 @@ export default function Companies() {
         </div>
       </div>
 
-      <style>{`
-        @keyframes marquee {
-          0% { transform: translateX(0%); }
-          100% { transform: translateX(-50%); }
-        }
-      `}</style>
     </section>
   );
 }
