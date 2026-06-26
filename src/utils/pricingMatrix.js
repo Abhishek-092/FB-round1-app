@@ -1,8 +1,20 @@
+/**
+ * Centralized pricing configuration matrix.
+ * All pricing values derive from this file — never hardcode in JSX.
+ */
+
 export const CURRENCIES = {
   USD: { symbol: '$', rate: 1.0, label: 'USD' },
   EUR: { symbol: '€', rate: 0.92, label: 'EUR' },
   INR: { symbol: '₹', rate: 83.0, label: 'INR' }
 };
+
+export const BILLING_CYCLES = {
+  monthly: { id: 'monthly', label: 'Monthly', discountMultiplier: 1.0 },
+  annual: { id: 'annual', label: 'Annual', discountMultiplier: 0.8 }
+};
+
+export const ANNUAL_DISCOUNT_PERCENT = 20;
 
 export const BASE_PLANS = [
   {
@@ -56,20 +68,49 @@ export const BASE_PLANS = [
 ];
 
 /**
- * Calculates price dynamically.
- * Applies a 20% discount for annual billing.
+ * Builds the full pricing matrix: plan × currency × billing cycle.
+ * Used for memoized lookups; all display prices flow through calculatePrice.
+ */
+export function buildPricingMatrix(plans = BASE_PLANS, currencies = CURRENCIES, cycles = BILLING_CYCLES) {
+  const matrix = {};
+
+  for (const plan of plans) {
+    matrix[plan.id] = {};
+    for (const currencyCode of Object.keys(currencies)) {
+      matrix[plan.id][currencyCode] = {};
+      for (const cycleKey of Object.keys(cycles)) {
+        matrix[plan.id][currencyCode][cycleKey] = calculatePrice(
+          plan.basePriceUSD,
+          currencyCode,
+          cycleKey === 'annual'
+        );
+      }
+    }
+  }
+
+  return matrix;
+}
+
+/**
+ * Calculates price dynamically from the configuration matrix.
+ * Applies currency conversion via rate, then annual discount (20%).
  */
 export function calculatePrice(basePriceUSD, currencyCode, isAnnual) {
   const currency = CURRENCIES[currencyCode] || CURRENCIES.USD;
-  let price = basePriceUSD * currency.rate;
-  
-  if (isAnnual) {
-    price = price * 0.8; // 20% discount
-  }
-  
-  // Format to standard visual denominations
+  const cycle = isAnnual ? BILLING_CYCLES.annual : BILLING_CYCLES.monthly;
+  let price = basePriceUSD * currency.rate * cycle.discountMultiplier;
+
   if (currencyCode === 'INR') {
     return Math.round(price / 50) * 50;
   }
   return Math.round(price);
+}
+
+/**
+ * Resolves a formatted price from the matrix for a specific plan/currency/cycle.
+ */
+export function getMatrixPrice(planId, currencyCode, billingCycle) {
+  const plan = BASE_PLANS.find((p) => p.id === planId);
+  if (!plan) return 0;
+  return calculatePrice(plan.basePriceUSD, currencyCode, billingCycle === 'annual');
 }
