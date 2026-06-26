@@ -21,7 +21,7 @@ export default function CTA() {
   };
 
   return (
-    <section id="cta" className="py-28 md:py-36 bg-[#F1F6F4] relative overflow-hidden border-b border-[#D9E8E2]">
+    <section id="cta" aria-label="Get started with Aether" className="py-28 md:py-36 bg-[#F1F6F4] relative overflow-hidden border-b border-[#D9E8E2]">
       
       {/* Glow bloom */}
       <div className="absolute inset-0 bg-radial from-[#D9E8E2]/40 to-transparent blur-3xl pointer-events-none rounded-full w-2/3 h-2/3 m-auto"></div>
