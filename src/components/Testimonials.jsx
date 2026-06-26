@@ -52,7 +52,7 @@ export default function Testimonials() {
               <span className="font-mono text-[9px] uppercase tracking-widest text-[#FF9932] font-bold block mb-6">
                 {primary.caseLabel}
               </span>
-              <p className="text-xl sm:text-2xl md:text-3xl font-bold text-[#172B36] leading-snug tracking-tight italic font-serif">
+              <p className="text-xl sm:text-2xl md:text-3xl font-bold text-[#172B36] leading-snug tracking-tight italic font-sans">
                 &ldquo;{primary.quote}&rdquo;
               </p>
             </div>
