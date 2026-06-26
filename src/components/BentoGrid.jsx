@@ -181,19 +181,23 @@ export default function BentoGrid() {
         );
       case 'broker':
         return (
-          <svg className="w-full h-32 md:h-40 text-[#114C5A]" viewBox="0 0 200 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path 
-              d="M 20 50 L 50 50 L 60 20 L 75 80 L 90 40 L 105 60 L 115 50 L 180 50" 
-              stroke="#114C5A" 
-              strokeWidth="1.5" 
+          <svg className="w-full h-full text-[#114C5A]" viewBox="0 0 200 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M 20 50 L 50 50 L 60 20 L 75 80 L 90 40 L 105 60 L 115 50 L 180 50"
+              stroke="#114C5A"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
             {isActive && (
-              <path 
-                d="M 20 50 L 50 50 L 60 20 L 75 80 L 90 40 L 105 60 L 115 50 L 180 50" 
-                stroke="#FFC801" 
-                strokeWidth="2" 
+              <path
+                d="M 20 50 L 50 50 L 60 20 L 75 80 L 90 40 L 105 60 L 115 50 L 180 50"
+                stroke="#FFC801"
+                strokeWidth="2"
                 strokeDasharray="20"
                 strokeDashoffset="100"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               >
                 <animate attributeName="stroke-dashoffset" values="100;0" dur="1.5s" repeatCount="indefinite" />
               </path>
