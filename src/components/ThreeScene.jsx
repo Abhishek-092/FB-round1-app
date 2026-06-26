@@ -5,11 +5,12 @@ export default function ThreeScene() {
   const containerRef = useRef(null);
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    const container = containerRef.current;
+    if (!container) return;
 
     // Dimensions
-    let width = containerRef.current.clientWidth;
-    let height = containerRef.current.clientHeight;
+    let width = container.clientWidth;
+    let height = container.clientHeight;
 
     // Scene setup
     const scene = new THREE.Scene();
@@ -29,7 +30,7 @@ export default function ThreeScene() {
     });
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    containerRef.current.appendChild(renderer.domElement);
+    container.appendChild(renderer.domElement);
 
     // 1. Create Glowing Textures via Canvas
     const createGlowingNodeTexture = () => {
@@ -190,12 +191,12 @@ export default function ThreeScene() {
 
     // Animation Loop
     let animationFrameId;
+    let frameCount = 0;
     const clock = new THREE.Clock();
 
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
 
-      const delta = clock.getDelta();
       const time = clock.getElapsedTime();
 
       // Slow orbital drift of node positions
@@ -219,8 +220,11 @@ export default function ThreeScene() {
       }
       nodePoints.geometry.attributes.position.needsUpdate = true;
 
-      // Recalculate connection mesh
-      updateLines();
+      // Recalculate connections on a throttled interval to avoid per-frame GPU allocation
+      frameCount += 1;
+      if (frameCount % 12 === 0) {
+        updateLines();
+      }
 
       // Subtle mouse follow (lerped camera movement for smooth parallax)
       currentX += (targetX - currentX) * 0.05;
@@ -241,9 +245,9 @@ export default function ThreeScene() {
 
     // Resize Handler
     const handleResize = () => {
-      if (!containerRef.current) return;
-      width = containerRef.current.clientWidth;
-      height = containerRef.current.clientHeight;
+      if (!container) return;
+      width = container.clientWidth;
+      height = container.clientHeight;
 
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
@@ -260,8 +264,13 @@ export default function ThreeScene() {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('resize', handleResize);
-      if (containerRef.current && renderer.domElement) {
-        containerRef.current.removeChild(renderer.domElement);
+      const connections = scene.getObjectByName('connections');
+      if (connections) {
+        connections.geometry.dispose();
+        scene.remove(connections);
+      }
+      if (container && renderer.domElement) {
+        container.removeChild(renderer.domElement);
       }
       // Dispose materials/geometries
       nodeGeometry.dispose();
@@ -278,7 +287,7 @@ export default function ThreeScene() {
   return (
     <div 
       ref={containerRef} 
-      className="w-full h-full min-h-[400px] lg:min-h-[600px] absolute inset-0 select-none pointer-events-none opacity-90 transition-opacity duration-1000"
+      className="w-full h-full min-h-[400px] lg:min-h-[600px] absolute inset-0 select-none pointer-events-none opacity-90 transition-opacity duration-300"
     />
   );
 }
