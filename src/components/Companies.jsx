@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 const BRANDS = [
   { name: 'KRONOS_DATA', sector: 'Telemetry' },
@@ -9,9 +9,9 @@ const BRANDS = [
   { name: 'ACME_ORCHESTRA', sector: 'State machine' }
 ];
 
-export default function Companies() {
+function Companies() {
   return (
-    <section className="py-12 border-b border-[#D9E8E2] bg-[#D9E8E2]/25 overflow-hidden">
+    <section aria-label="Trusted company networks" className="py-12 border-b border-[#D9E8E2] bg-[#D9E8E2]/25 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="flex flex-col md:flex-row md:items-center gap-6 justify-between">
           
@@ -45,3 +45,5 @@ export default function Companies() {
     </section>
   );
 }
+
+export default memo(Companies);
