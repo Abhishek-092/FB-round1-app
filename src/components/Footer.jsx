@@ -43,7 +43,7 @@ export default function Footer() {
               </defs>
             </svg>
             <span className="font-mono text-sm tracking-wider text-[#114C5A] font-bold">
-              AE//THER
+              AETHER
             </span>
           </div>
           <p className="text-xs text-[#172B36]/60 leading-relaxed font-sans max-w-xs">
