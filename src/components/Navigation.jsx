@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 
-export default function Navigation() {
+function Navigation() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -27,7 +27,7 @@ export default function Navigation() {
       >
         <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
           {/* Logo */}
-          <a href="#" className="flex items-center gap-3 group focus:outline-none">
+          <a href="#main-content" className="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FFC801] focus-visible:ring-offset-2" aria-label="AETHER home">
             <svg className="w-6 h-6 text-[#114C5A]" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
               <path d="M8.372 1.349a.75.75 0 0 0-.744 0l-4.81 2.748L8 7.131l5.182-3.034zM14 5.357L8.75 8.43v6.005l4.872-2.784A.75.75 0 0 0 14 11zm-6.75 9.078V8.43L2 5.357V11c0 .27.144.518.378.651z"/>
             </svg>
@@ -37,7 +37,7 @@ export default function Navigation() {
           </a>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-8" aria-label="Primary">
             <a 
               href="#workflow" 
               className="text-xs uppercase font-mono tracking-widest text-[#172B36]/70 hover:text-[#114C5A] transition-colors duration-150"
@@ -171,3 +171,5 @@ export default function Navigation() {
     </>
   );
 }
+
+export default memo(Navigation);
