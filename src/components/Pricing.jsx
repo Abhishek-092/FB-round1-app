@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { BASE_PLANS, CURRENCIES, calculatePrice } from '../utils/pricingMatrix';
 
 // Memoized Pricing Card to prevent unneeded re-renders
@@ -85,22 +85,27 @@ const PricingCard = React.memo(({ plan, price, symbol, isAnnual }) => {
 });
 
 // isolated sub-tree wrapper for pricing values
-export default function Pricing() {
+function Pricing() {
   const [currency, setCurrency] = useState('USD');
-  const [billingCycle, setBillingCycle] = useState('monthly'); // 'monthly' | 'annual'
+  const [billingCycle, setBillingCycle] = useState('monthly');
 
-  // Calculate prices memoized locally to this component's state
+  const handleCurrencyChange = useCallback((curr) => setCurrency(curr), []);
+  const handleBillingMonthly = useCallback(() => setBillingCycle('monthly'), []);
+  const handleBillingAnnual = useCallback(() => setBillingCycle('annual'), []);
+  const handleBillingToggle = useCallback(
+    () => setBillingCycle((prev) => (prev === 'monthly' ? 'annual' : 'monthly')),
+    []
+  );
+
   const plansWithCalculatedPrices = useMemo(() => {
-    return BASE_PLANS.map(plan => {
-      const computed = calculatePrice(plan.basePriceUSD, currency, billingCycle === 'annual');
-      return {
-        ...plan,
-        calculatedPrice: computed
-      };
-    });
+    return BASE_PLANS.map((plan) => ({
+      ...plan,
+      calculatedPrice: calculatePrice(plan.basePriceUSD, currency, billingCycle === 'annual')
+    }));
   }, [currency, billingCycle]);
 
   const activeCurrencySymbol = CURRENCIES[currency].symbol;
+  const isAnnual = billingCycle === 'annual';
 
   return (
     <section id="pricing" aria-label="Pricing plans" className="py-24 md:py-36 bg-[#F1F6F4] border-b border-[#D9E8E2] relative">
@@ -124,7 +129,8 @@ export default function Pricing() {
               {Object.keys(CURRENCIES).map(curr => (
                 <button
                   key={curr}
-                  onClick={() => setCurrency(curr)}
+                  type="button"
+                  onClick={() => handleCurrencyChange(curr)}
                   className={`px-3 py-1.5 text-[10px] font-bold tracking-wider transition-all duration-150 ${
                     currency === curr 
                       ? 'bg-[#114C5A] text-[#FFC801]' 
@@ -139,7 +145,8 @@ export default function Pricing() {
             {/* Billing cycle switch */}
             <div className="flex items-center gap-3">
               <button 
-                onClick={() => setBillingCycle('monthly')}
+                type="button"
+                onClick={handleBillingMonthly}
                 className={`text-[10px] font-bold tracking-wider transition-colors ${
                   billingCycle === 'monthly' ? 'text-[#114C5A]' : 'text-[#172B36]/40'
                 }`}
@@ -149,7 +156,8 @@ export default function Pricing() {
               
               {/* Custom Toggle Switch */}
               <button 
-                onClick={() => setBillingCycle(prev => prev === 'monthly' ? 'annual' : 'monthly')}
+                type="button"
+                onClick={handleBillingToggle}
                 className="w-10 h-5 bg-[#D9E8E2] p-0.5 rounded-none flex items-center transition-colors focus:outline-none"
                 aria-label="Toggle annual billing discount"
               >
@@ -161,7 +169,8 @@ export default function Pricing() {
               </button>
 
               <button 
-                onClick={() => setBillingCycle('annual')}
+                type="button"
+                onClick={handleBillingAnnual}
                 className={`text-[10px] font-bold tracking-wider transition-colors flex items-center gap-1 ${
                   billingCycle === 'annual' ? 'text-[#114C5A]' : 'text-[#172B36]/40'
                 }`}
@@ -183,7 +192,7 @@ export default function Pricing() {
               plan={plan}
               price={plan.calculatedPrice}
               symbol={activeCurrencySymbol}
-              isAnnual={billingCycle === 'annual'}
+              isAnnual={isAnnual}
             />
           ))}
         </div>
@@ -211,3 +220,5 @@ export default function Pricing() {
     </section>
   );
 }
+
+export default React.memo(Pricing);
