@@ -103,7 +103,7 @@ export default function Pricing() {
   const activeCurrencySymbol = CURRENCIES[currency].symbol;
 
   return (
-    <section id="pricing" className="py-24 md:py-36 bg-[#F1F6F4] border-b border-[#D9E8E2] relative">
+    <section id="pricing" aria-label="Pricing plans" className="py-24 md:py-36 bg-[#F1F6F4] border-b border-[#D9E8E2] relative">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         
         {/* Section Heading */}
