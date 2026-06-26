@@ -1,5 +1,6 @@
-import React from 'react';
-import ThreeScene from './ThreeScene';
+import React, { Suspense, memo } from 'react';
+
+const ThreeScene = React.lazy(() => import('./ThreeScene'));
 
 // Play triangle icon — replaced with allowed chevron-right SVG
 const PlayIcon = () => (
@@ -8,9 +9,9 @@ const PlayIcon = () => (
   </svg>
 );
 
-export default function Hero() {
+function Hero() {
   return (
-    <section className="relative min-h-screen pt-28 md:pt-36 flex items-center overflow-hidden grainy-bg bg-bloom">
+    <section aria-label="Hero" className="relative min-h-screen pt-28 md:pt-36 flex items-center overflow-hidden grainy-bg bg-bloom">
       <div className="max-w-7xl mx-auto px-6 md:px-12 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
         
         {/* Left Side: Editorial Content */}
@@ -76,7 +77,9 @@ export default function Hero() {
           {/* Subtle Ambient Bloom behind Canvas */}
           <div className="absolute inset-0 bg-radial from-[#D9E8E2]/60 to-transparent blur-3xl pointer-events-none rounded-full w-4/5 h-4/5 m-auto"></div>
           
-          <ThreeScene />
+          <Suspense fallback={<div className="w-full h-full min-h-[400px] lg:min-h-[600px] absolute inset-0" aria-hidden="true" />}>
+            <ThreeScene />
+          </Suspense>
         </div>
 
       </div>
@@ -87,3 +90,5 @@ export default function Hero() {
     </section>
   );
 }
+
+export default memo(Hero);
