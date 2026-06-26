@@ -126,12 +126,12 @@ function BentoGrid() {
   });
 
   // SVG Animation components based on features
-  const renderSVG = (type, isActive) => {
+  const renderSVG = (type) => {
     switch (type) {
       case 'mesh':
         return (
           <svg className="w-full h-32 md:h-40 text-[#114C5A]" viewBox="0 0 200 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="50" cy="50" r="3" fill="#FFC801" className={isActive ? 'animate-ping' : ''} />
+            <circle cx="50" cy="50" r="3" fill="#FFC801" className="animate-ping" />
             <circle cx="100" cy="20" r="3" fill="#114C5A" />
             <circle cx="100" cy="80" r="3" fill="#114C5A" />
             <circle cx="150" cy="50" r="3" fill="#FF9932" />
@@ -139,18 +139,14 @@ function BentoGrid() {
             <line x1="50" y1="50" x2="100" y2="80" stroke="#114C5A" strokeWidth="0.5" strokeDasharray="3" />
             <line x1="100" y1="20" x2="150" y2="50" stroke="#114C5A" strokeWidth="0.5" />
             <line x1="100" y1="80" x2="150" y2="50" stroke="#114C5A" strokeWidth="0.5" />
-            {isActive && (
-              <>
-                <circle cx="75" cy="35" r="2" fill="#FFC801">
-                  <animate attributeName="cx" values="50;100" dur="2s" repeatCount="indefinite" />
-                  <animate attributeName="cy" values="50;20" dur="2s" repeatCount="indefinite" />
-                </circle>
-                <circle cx="125" cy="35" r="2" fill="#FF9932">
-                  <animate attributeName="cx" values="100;150" dur="1.5s" repeatCount="indefinite" />
-                  <animate attributeName="cy" values="20;50" dur="1.5s" repeatCount="indefinite" />
-                </circle>
-              </>
-            )}
+            <circle cx="75" cy="35" r="2" fill="#FFC801">
+              <animate attributeName="cx" values="50;100" dur="2s" repeatCount="indefinite" />
+              <animate attributeName="cy" values="50;20" dur="2s" repeatCount="indefinite" />
+            </circle>
+            <circle cx="125" cy="35" r="2" fill="#FF9932">
+              <animate attributeName="cx" values="100;150" dur="1.5s" repeatCount="indefinite" />
+              <animate attributeName="cy" values="20;50" dur="1.5s" repeatCount="indefinite" />
+            </circle>
           </svg>
         );
       case 'code':
@@ -161,8 +157,8 @@ function BentoGrid() {
               <div className="pl-4">"source": "api_stream",</div>
               <div className="pl-4 flex items-center gap-1">
                 <span>"status":</span>
-                <span className={isActive ? 'text-[#114C5A] font-bold' : 'text-[#114C5A]/60'}>
-                  {isActive ? '"parsed_ok"' : '"parsing..."'}
+                <span className="text-[#114C5A] font-bold">
+                  "parsed_ok"
                 </span>
               </div>
               <div className="pl-4">"records": 10842</div>
@@ -174,13 +170,11 @@ function BentoGrid() {
         return (
           <svg className="w-full h-32 md:h-40 text-[#114C5A]" viewBox="0 0 200 100" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect x="75" y="20" width="50" height="60" rx="4" stroke="#114C5A" strokeWidth="1" />
-            <circle cx="100" cy="50" r="10" stroke="#FFC801" strokeWidth="1" fill={isActive ? 'rgba(255,200,1,0.1)' : 'transparent'} />
+            <circle cx="100" cy="50" r="10" stroke="#FFC801" strokeWidth="1" fill="rgba(255,200,1,0.1)" />
             <path d="M 90 20 L 110 20" stroke="#114C5A" strokeWidth="2" />
-            {isActive && (
-              <path d="M 60 50 A 40 40 0 0 1 140 50" stroke="#FF9932" strokeWidth="0.75" strokeDasharray="4">
-                <animateTransform attributeName="transform" type="rotate" from="0 100 50" to="360 100 50" dur="4s" repeatCount="indefinite" />
-              </path>
-            )}
+            <path d="M 60 50 A 40 40 0 0 1 140 50" stroke="#FF9932" strokeWidth="0.75" strokeDasharray="4">
+              <animateTransform attributeName="transform" type="rotate" from="0 100 50" to="360 100 50" dur="4s" repeatCount="indefinite" />
+            </path>
           </svg>
         );
       case 'enrich':
@@ -190,11 +184,9 @@ function BentoGrid() {
               <rect x="40" y="35" width="40" height="30" border="1px" stroke="#114C5A" strokeWidth="1" />
               <rect x="110" y="35" width="40" height="30" stroke="#114C5A" strokeWidth="1" />
               <line x1="80" y1="50" x2="110" y2="50" stroke="#FFC801" strokeWidth="1" strokeDasharray="3" />
-              {isActive && (
-                <circle cx="95" cy="50" r="3" fill="#FF9932">
-                  <animate attributeName="cx" values="80;110" dur="1s" repeatCount="indefinite" />
-                </circle>
-              )}
+              <circle cx="95" cy="50" r="3" fill="#FF9932">
+                <animate attributeName="cx" values="80;110" dur="1s" repeatCount="indefinite" />
+              </circle>
               {/* Extra metadata blocks */}
               <rect x="118" y="20" width="24" height="8" rx="2" fill="#D9E8E2" stroke="#114C5A" strokeWidth="0.5" />
               <rect x="118" y="72" width="24" height="8" rx="2" fill="#D9E8E2" stroke="#114C5A" strokeWidth="0.5" />
@@ -211,19 +203,17 @@ function BentoGrid() {
               strokeLinecap="round"
               strokeLinejoin="round"
             />
-            {isActive && (
-              <path
-                d="M 20 50 L 50 50 L 60 20 L 75 80 L 90 40 L 105 60 L 115 50 L 180 50"
-                stroke="#FFC801"
-                strokeWidth="2"
-                strokeDasharray="20"
-                strokeDashoffset="100"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <animate attributeName="stroke-dashoffset" values="100;0" dur="1.5s" repeatCount="indefinite" />
-              </path>
-            )}
+            <path
+              d="M 20 50 L 50 50 L 60 20 L 75 80 L 90 40 L 105 60 L 115 50 L 180 50"
+              stroke="#FFC801"
+              strokeWidth="2"
+              strokeDasharray="20"
+              strokeDashoffset="100"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <animate attributeName="stroke-dashoffset" values="100;0" dur="1.5s" repeatCount="indefinite" />
+            </path>
           </svg>
         );
       default:
