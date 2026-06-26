@@ -51,7 +51,7 @@ const SECURITY_ITEMS = [
 
 export default function Security() {
   return (
-    <section id="security" className="py-24 md:py-36 bg-[#114C5A] text-[#F1F6F4] relative overflow-hidden">
+    <section id="security" aria-label="Security and compliance" className="py-24 md:py-36 bg-[#114C5A] text-[#F1F6F4] relative overflow-hidden">
       
       {/* Decorative radial mesh light bloom */}
       <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] rounded-full bg-[#FFC801]/5 blur-[120px] pointer-events-none"></div>
