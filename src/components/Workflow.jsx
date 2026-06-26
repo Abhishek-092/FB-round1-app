@@ -1,5 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import { Database, RefreshCw, Cpu, GitMerge, HardDrive, ArrowRight } from 'lucide-react';
+
+// Custom SVGs requested by judges
+const IngestionIcon = (props) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+    <path fillRule="evenodd" d="M19.902 4.098a3.75 3.75 0 0 0-5.304 0l-4.5 4.5a3.75 3.75 0 0 0 1.035 6.037a.75.75 0 0 1-.646 1.353a5.25 5.25 0 0 1-1.449-8.45l4.5-4.5a5.25 5.25 0 1 1 7.424 7.424l-1.757 1.757a.75.75 0 1 1-1.06-1.06l1.757-1.757a3.75 3.75 0 0 0 0-5.304Zm-7.389 4.267a.75.75 0 0 1 1-.353a5.25 5.25 0 0 1 1.449 8.45l-4.5 4.5a5.25 5.25 0 1 1-7.424-7.424l1.757-1.757a.75.75 0 1 1 1.06 1.06l-1.757 1.757a3.75 3.75 0 1 0 5.304 5.304l4.5-4.5a3.75 3.75 0 0 0-1.035-6.037a.75.75 0 0 1-.354-1Z" clipRule="evenodd"/>
+  </svg>
+);
+
+const NormalizationIcon = (props) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M16.023 9.348h4.992v-.001m-4.992.001A9 9 0 0 0 4.02 12m15.963-2.652A8.961 8.961 0 0 0 16.023 6m3.962 11.348h-4.992v.001m4.992-.001A9 9 0 0 1 19.98 12m-15.96 2.652A8.962 8.962 0 0 0 7.977 18m-3.962-2.652A8.966 8.966 0 0 0 4.02 12"/>
+  </svg>
+);
+
+const EnrichmentIcon = (props) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93c.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 0 1 1.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204c.165.397.505.71.93.78l.893.15c.543.09.94.56.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.893.149c-.425.07-.765.383-.93.78c-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 0 1-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107c-.397.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93c-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 0 1-.12-1.45l.527-.737c.25-.35.273-.806.108-1.204c-.165-.397-.505-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78c.165-.398.143-.854-.107-1.204l-.527-.738a1.125 1.125 0 0 1 .12-1.45l.773-.773a1.125 1.125 0 0 1 1.45-.12l.737.527c.35.25.807.272 1.204.107c.397-.165.71-.505.78-.929l.15-.894Z"/>
+    <path d="M15 12a3 3 0 1 1-6 0a3 3 0 0 1 6 0Z"/>
+  </svg>
+);
+
+const RoutingIcon = (props) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M2.25 18L9 11.25l4.5 4.5L21.75 7.5M21.75 7.5H16.5M21.75 7.5v5.25"/>
+  </svg>
+);
+
+const DeliveryIcon = (props) => (
+  <svg viewBox="0 0 16 16" fill="currentColor" {...props}>
+    <path d="M8.372 1.349a.75.75 0 0 0-.744 0l-4.81 2.748L8 7.131l5.182-3.034zM14 5.357L8.75 8.43v6.005l4.872-2.784A.75.75 0 0 0 14 11zm-6.75 9.078V8.43L2 5.357V11c0 .27.144.518.378.651z"/>
+  </svg>
+);
 
 const STEPS = [
   {
@@ -9,7 +40,7 @@ const STEPS = [
     description: 'Listen to distributed events, databases, webhook endpoints, and vector stores. Ingest unstructured stream telemetry without pre-defining database schemas.',
     metric: '180,000 events/sec',
     detailMetric: 'Zero buffer loss',
-    icon: Database,
+    icon: IngestionIcon,
     color: '#FFC801'
   },
   {
@@ -19,7 +50,7 @@ const STEPS = [
     description: 'Autonomous agents instantly normalize types, repair broken formatting, align time zones, and detect schema drift on the fly.',
     metric: '99.98% accuracy',
     detailMetric: 'AI-assisted repair',
-    icon: RefreshCw,
+    icon: NormalizationIcon,
     color: '#FF9932'
   },
   {
@@ -29,7 +60,7 @@ const STEPS = [
     description: 'Vector embeddings are generated, PII is masked, sentiment analysis is appended, and anomalous data points are dynamically quarantined.',
     metric: '1.2ms embedding time',
     detailMetric: 'AES-256 PII masking',
-    icon: Cpu,
+    icon: EnrichmentIcon,
     color: '#FFC801'
   },
   {
@@ -39,7 +70,7 @@ const STEPS = [
     description: 'Orchestrate queue paths based on node availability. Distribute data dynamically across standard cloud structures or private VPC nodes.',
     metric: '0.04ms queue latency',
     detailMetric: 'Fail-safe fallback',
-    icon: GitMerge,
+    icon: RoutingIcon,
     color: '#FF9932'
   },
   {
@@ -49,7 +80,7 @@ const STEPS = [
     description: 'Deliver ready datasets directly to data lakes, vector indices, data warehouses, or custom real-time application pipelines.',
     metric: '35+ destinations',
     detailMetric: 'Transactional integrity',
-    icon: HardDrive,
+    icon: DeliveryIcon,
     color: '#114C5A'
   }
 ];
