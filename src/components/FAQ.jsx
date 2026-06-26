@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { ChevronDown } from 'lucide-react';
 
 const FAQS = [
   {
@@ -68,12 +67,19 @@ export default function FAQ() {
                   <span className="text-sm md:text-base font-bold text-[#172B36]">
                     {faq.question}
                   </span>
-                  <ChevronDown 
-                    size={16} 
-                    className={`text-[#172B36]/50 transition-transform duration-300 flex-shrink-0 ml-4 ${
+                  <svg 
+                    viewBox="0 0 24 24" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    strokeWidth="1.5" 
+                    strokeLinecap="round" 
+                    strokeLinejoin="round" 
+                    className={`w-4 h-4 text-[#172B36]/50 transition-transform duration-300 flex-shrink-0 ml-4 ${
                       isOpen ? 'rotate-180 text-[#114C5A]' : ''
-                    }`} 
-                  />
+                    }`}
+                  >
+                    <path d="m19.5 8.25l-7.5 7.5l-7.5-7.5"/>
+                  </svg>
                 </button>
 
                 {/* Accordion body container with CSS grid rows transition */}
