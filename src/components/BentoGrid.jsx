@@ -15,20 +15,26 @@ const CodeIcon = (props) => (
 );
 
 const SandboxIcon = (props) => (
-  <svg viewBox="0 0 16 16" fill="currentColor" {...props}>
-    <path d="M8.372 1.349a.75.75 0 0 0-.744 0l-4.81 2.748L8 7.131l5.182-3.034zM14 5.357L8.75 8.43v6.005l4.872-2.784A.75.75 0 0 0 14 11zm-6.75 9.078V8.43L2 5.357V11c0 .27.144.518.378.651z"/>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    {/* Isometric cube outline version */}
+    <path d="M12 2 L21 7 L12 12 L3 7 Z"/>
+    <path d="M12 12 L12 22"/>
+    <path d="M3 7 L3 17"/>
+    <path d="M21 7 L21 17"/>
+    <path d="M3 17 L12 22 L21 17"/>
   </svg>
 );
 
 const EnrichIcon = (props) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
-    <path d="M10.5 6a7.5 7.5 0 1 0 7.5 7.5h-7.5V6z"/>
-    <path d="M13.5 10.5H21A7.5 7.5 0 0 0 13.5 3v7.5z"/>
+    {/* link.svg outline */}
+    <path d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244"/>
   </svg>
 );
 
 const BrokerIcon = (props) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    {/* arrow-trending-up.svg */}
     <path d="M2.25 18L9 11.25l4.5 4.5L21.75 7.5M21.75 7.5H16.5M21.75 7.5v5.25"/>
   </svg>
 );
@@ -42,7 +48,7 @@ const ChevronDownIcon = (props) => (
 const FEATURES = [
   {
     id: 'nodes',
-    icon: MeshIcon,
+    icon: SandboxIcon,
     label: 'NODE_MESH',
     title: 'Distributed Execution Nodes',
     description: 'Deploy stateless containers that execute code closer to your data sources. Minimize pipeline transport overhead and query latency.',
@@ -62,7 +68,7 @@ const FEATURES = [
   },
   {
     id: 'shield',
-    icon: SandboxIcon,
+    icon: MeshIcon,
     label: 'SEC_SHIELD',
     title: 'Memory Sandboxing',
     description: 'Run data transformations in isolated memory sandboxes, protecting private networks from untrusted source payloads.',
