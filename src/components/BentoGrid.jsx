@@ -108,6 +108,7 @@ export default function BentoGrid() {
     }, 3000);
     return () => clearInterval(timer);
   }, []);
+
   // SVG Animation components based on features
   const renderSVG = (type, isActive) => {
     switch (type) {
