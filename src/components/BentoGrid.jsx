@@ -145,7 +145,7 @@ export default function BentoGrid() {
               <div className="pl-4">"source": "api_stream",</div>
               <div className="pl-4 flex items-center gap-1">
                 <span>"status":</span>
-                <span className={isActive ? 'text-emerald-700 font-bold' : 'text-[#114C5A]'}>
+                <span className={isActive ? 'text-[#114C5A] font-bold' : 'text-[#114C5A]/60'}>
                   {isActive ? '"parsed_ok"' : '"parsing..."'}
                 </span>
               </div>
