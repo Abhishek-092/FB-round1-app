@@ -18,7 +18,7 @@ function App() {
       <Navigation />
       
       {/* Main narrative flows */}
-      <main className="flex-grow">
+      <main id="main-content" aria-label="Main content" className="flex-grow">
         {/* Cinematic hero and interactive 3D nodes canvas */}
         <Hero />
         
