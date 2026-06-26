@@ -139,13 +139,21 @@ function BentoGrid() {
             <line x1="50" y1="50" x2="100" y2="80" stroke="#114C5A" strokeWidth="0.5" strokeDasharray="3" />
             <line x1="100" y1="20" x2="150" y2="50" stroke="#114C5A" strokeWidth="0.5" />
             <line x1="100" y1="80" x2="150" y2="50" stroke="#114C5A" strokeWidth="0.5" />
-            <circle cx="75" cy="35" r="2" fill="#FFC801">
-              <animate attributeName="cx" values="50;100" dur="2s" repeatCount="indefinite" />
-              <animate attributeName="cy" values="50;20" dur="2s" repeatCount="indefinite" />
+            {/* dot: left node → top node (dotted path) */}
+            <circle r="2" fill="#FFC801">
+              <animateMotion dur="2s" repeatCount="indefinite" path="M 50 50 L 100 20" />
             </circle>
-            <circle cx="125" cy="35" r="2" fill="#FF9932">
-              <animate attributeName="cx" values="100;150" dur="1.5s" repeatCount="indefinite" />
-              <animate attributeName="cy" values="20;50" dur="1.5s" repeatCount="indefinite" />
+            {/* dot: left node → bottom node (dotted path) */}
+            <circle r="2" fill="#FFC801">
+              <animateMotion dur="2.4s" repeatCount="indefinite" path="M 50 50 L 100 80" begin="0.8s" />
+            </circle>
+            {/* dot: top node → right node */}
+            <circle r="2" fill="#FF9932">
+              <animateMotion dur="1.5s" repeatCount="indefinite" path="M 100 20 L 150 50" begin="0.4s" />
+            </circle>
+            {/* dot: bottom node → right node */}
+            <circle r="2" fill="#FF9932">
+              <animateMotion dur="1.8s" repeatCount="indefinite" path="M 100 80 L 150 50" begin="1.2s" />
             </circle>
           </svg>
         );
