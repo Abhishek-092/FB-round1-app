@@ -162,26 +162,32 @@ export default function Workflow() {
             {/* SVG Visualizer */}
             <div className="relative w-full h-[220px] flex items-center justify-between mb-8 bg-[#D9E8E2]/10 border border-[#D9E8E2]/45 p-6 md:p-10 rounded-none overflow-hidden">
               
-              {/* Dynamic Connecting SVG Line */}
-              <svg className="absolute inset-0 w-full h-full pointer-events-none" xmlns="http://www.w3.org/2000/svg">
-                {/* Background Connecting Line */}
-                <path 
-                  d="M 50 110 C 200 110, 200 110, 650 110" 
-                  stroke="#D9E8E2" 
-                  strokeWidth="2" 
-                  fill="none" 
-                  className="w-full"
-                />
-                
-                {/* Animated Pulsing Connection Line */}
-                <path 
-                  d="M 50 110 C 200 110, 200 110, 650 110" 
-                  stroke="#FFC801" 
-                  strokeWidth="2" 
-                  fill="none" 
-                  className="pulse-connection"
-                />
-              </svg>
+              {/* Dynamic Connecting Line Container - stops exactly at first and last node center */}
+              <div className="absolute left-[48px] right-[48px] md:left-[72px] md:right-[72px] top-0 bottom-0 pointer-events-none">
+                <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                  {/* Background Connecting Line */}
+                  <line 
+                    x1="0" 
+                    y1="50%" 
+                    x2="100%" 
+                    y2="50%" 
+                    stroke="#D9E8E2" 
+                    strokeWidth="2" 
+                  />
+                  
+                  {/* Animated Pulsing Connection Line */}
+                  <line 
+                    x1="0" 
+                    y1="50%" 
+                    x2="100%" 
+                    y2="50%" 
+                    stroke="#FFC801" 
+                    strokeWidth="2" 
+                    strokeDasharray="8"
+                    className="pulse-connection"
+                  />
+                </svg>
+              </div>
 
               {/* Step Hub Nodes */}
               {STEPS.map((step, idx) => {
