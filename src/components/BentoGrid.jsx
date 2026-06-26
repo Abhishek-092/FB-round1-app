@@ -33,10 +33,10 @@ const EnrichIcon = (props) => (
   </svg>
 );
 
+// BrokerIcon → bolt/lightning: represents high-throughput, high-speed ingestion
 const BrokerIcon = (props) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
-    {/* arrow-trending-up.svg */}
-    <path d="M2.25 18L9 11.25l4.5 4.5L21.75 7.5M21.75 7.5H16.5M21.75 7.5v5.25"/>
+    <path d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z"/>
   </svg>
 );
 

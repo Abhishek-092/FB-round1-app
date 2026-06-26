@@ -7,9 +7,10 @@ const IngestionIcon = (props) => (
   </svg>
 );
 
+// NormalizationIcon → adjustments/sliders: represents schema alignment & normalization
 const NormalizationIcon = (props) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
-    <path d="M16.023 9.348h4.992v-.001m-4.992.001A9 9 0 0 0 4.02 12m15.963-2.652A8.961 8.961 0 0 0 16.023 6m3.962 11.348h-4.992v.001m4.992-.001A9 9 0 0 1 19.98 12m-15.96 2.652A8.962 8.962 0 0 0 7.977 18m-3.962-2.652A8.966 8.966 0 0 0 4.02 12"/>
+    <path d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75"/>
   </svg>
 );
 
@@ -20,9 +21,10 @@ const EnrichmentIcon = (props) => (
   </svg>
 );
 
+// RoutingIcon → share/fork network icon: represents distributed mesh routing
 const RoutingIcon = (props) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
-    <path d="M2.25 18L9 11.25l4.5 4.5L21.75 7.5M21.75 7.5H16.5M21.75 7.5v5.25"/>
+    <path d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z"/>
   </svg>
 );
 
