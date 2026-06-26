@@ -1,10 +1,48 @@
 import React, { useState, useEffect } from 'react';
-import { Cpu, Lock, Terminal, Layers, Activity, ChevronDown } from 'lucide-react';
+
+// Custom SVGs requested by judges
+const MeshIcon = (props) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93c.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 0 1 1.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204c.165.397.505.71.93.78l.893.15c.543.09.94.56.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.893.149c-.425.07-.765.383-.93.78c-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 0 1-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107c-.397.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93c-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 0 1-.12-1.45l.527-.737c.25-.35.273-.806.108-1.204c-.165-.397-.505-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78c.165-.398.143-.854-.107-1.204l-.527-.738a1.125 1.125 0 0 1 .12-1.45l.773-.773a1.125 1.125 0 0 1 1.45-.12l.737.527c.35.25.807.272 1.204.107c.397-.165.71-.505.78-.929l.15-.894Z"/>
+    <path d="M15 12a3 3 0 1 1-6 0a3 3 0 0 1 6 0Z"/>
+  </svg>
+);
+
+const CodeIcon = (props) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M16.023 9.348h4.992v-.001m-4.992.001A9 9 0 0 0 4.02 12m15.963-2.652A8.961 8.961 0 0 0 16.023 6m3.962 11.348h-4.992v.001m4.992-.001A9 9 0 0 1 19.98 12m-15.96 2.652A8.962 8.962 0 0 0 7.977 18m-3.962-2.652A8.966 8.966 0 0 0 4.02 12"/>
+  </svg>
+);
+
+const SandboxIcon = (props) => (
+  <svg viewBox="0 0 16 16" fill="currentColor" {...props}>
+    <path d="M8.372 1.349a.75.75 0 0 0-.744 0l-4.81 2.748L8 7.131l5.182-3.034zM14 5.357L8.75 8.43v6.005l4.872-2.784A.75.75 0 0 0 14 11zm-6.75 9.078V8.43L2 5.357V11c0 .27.144.518.378.651z"/>
+  </svg>
+);
+
+const EnrichIcon = (props) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M10.5 6a7.5 7.5 0 1 0 7.5 7.5h-7.5V6z"/>
+    <path d="M13.5 10.5H21A7.5 7.5 0 0 0 13.5 3v7.5z"/>
+  </svg>
+);
+
+const BrokerIcon = (props) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M2.25 18L9 11.25l4.5 4.5L21.75 7.5M21.75 7.5H16.5M21.75 7.5v5.25"/>
+  </svg>
+);
+
+const ChevronDownIcon = (props) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="m19.5 8.25l-7.5 7.5l-7.5-7.5"/>
+  </svg>
+);
 
 const FEATURES = [
   {
     id: 'nodes',
-    icon: Cpu,
+    icon: MeshIcon,
     label: 'NODE_MESH',
     title: 'Distributed Execution Nodes',
     description: 'Deploy stateless containers that execute code closer to your data sources. Minimize pipeline transport overhead and query latency.',
@@ -14,7 +52,7 @@ const FEATURES = [
   },
   {
     id: 'parser',
-    icon: Terminal,
+    icon: CodeIcon,
     label: 'PARSER_ENGINE',
     title: 'Cognitive Parsing',
     description: 'Transform unformatted JSON, log strings, and binary streams into structured database tables on ingestion.',
@@ -24,7 +62,7 @@ const FEATURES = [
   },
   {
     id: 'shield',
-    icon: Lock,
+    icon: SandboxIcon,
     label: 'SEC_SHIELD',
     title: 'Memory Sandboxing',
     description: 'Run data transformations in isolated memory sandboxes, protecting private networks from untrusted source payloads.',
@@ -34,7 +72,7 @@ const FEATURES = [
   },
   {
     id: 'enrichment',
-    icon: Layers,
+    icon: EnrichIcon,
     label: 'DATA_ENRICH',
     title: 'Deep Data Enrichment',
     description: 'Enrich raw records with live vector database lookups and LLM semantic tagging during ingestion pipelines.',
@@ -44,7 +82,7 @@ const FEATURES = [
   },
   {
     id: 'broker',
-    icon: Activity,
+    icon: BrokerIcon,
     label: 'INGRESS_BROKER',
     title: 'High-Throughput Broker',
     description: 'Scale ingestion queues to handle millions of requests without buffering bottlenecks. Supported by an optimized memory queue.',
@@ -364,9 +402,8 @@ export default function BentoGrid() {
                       <h3 className="text-base font-bold text-[#172B36]">{feature.title}</h3>
                     </div>
                   </div>
-                  <ChevronDown 
-                    size={16} 
-                    className={`text-[#172B36]/50 transition-transform duration-300 ${isOpen ? 'rotate-180 text-[#114C5A]' : ''}`} 
+                  <ChevronDownIcon 
+                    className={`w-4 h-4 text-[#172B36]/50 transition-transform duration-300 ${isOpen ? 'rotate-180 text-[#114C5A]' : ''}`} 
                   />
                 </button>
 
