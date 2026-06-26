@@ -8,39 +8,8 @@ export default function Footer() {
         {/* Brand details */}
         <div className="col-span-2 space-y-4">
           <div className="flex items-center gap-3">
-            <svg className="w-6 h-6 text-[#114C5A]" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-              {/* Outermost dotted orbit (spins slowly clockwise) */}
-              <circle cx="50" cy="50" r="42" stroke="#FF9932" strokeWidth="1.25" strokeDasharray="4 4" opacity="0.6" className="logo-spin-slow" />
-              
-              {/* Concentric rings (spin slowly counter-clockwise) */}
-              <circle cx="50" cy="50" r="30" stroke="#114C5A" strokeWidth="1" opacity="0.25" className="logo-spin-slow-reverse" />
-              <circle cx="50" cy="50" r="20" stroke="#114C5A" strokeWidth="1" opacity="0.15" />
-              
-              {/* Connecting Radial Lines (hexagonal) */}
-              <line x1="50" y1="50" x2="50" y2="15" stroke="#FFC801" strokeWidth="2.5" />
-              <line x1="50" y1="50" x2="80.3" y2="32.5" stroke="#FFC801" strokeWidth="2.5" />
-              <line x1="50" y1="50" x2="80.3" y2="67.5" stroke="#FFC801" strokeWidth="2.5" />
-              <line x1="50" y1="50" x2="50" y2="85" stroke="#FFC801" strokeWidth="2.5" />
-              <line x1="50" y1="50" x2="19.7" y2="67.5" stroke="#FFC801" strokeWidth="2.5" />
-              <line x1="50" y1="50" x2="19.7" y2="32.5" stroke="#FFC801" strokeWidth="2.5" />
-
-              {/* Central glowing node (pulsing) */}
-              <circle cx="50" cy="50" r="11" fill="url(#logoGlowFooter)" className="logo-pulse" />
-              
-              {/* Outer nodes (hollow rings matching background) */}
-              <circle cx="50" cy="15" r="5.5" fill="#F1F6F4" stroke="#FFC801" strokeWidth="2.5" />
-              <circle cx="80.3" cy="32.5" r="5.5" fill="#F1F6F4" stroke="#FFC801" strokeWidth="2.5" />
-              <circle cx="80.3" cy="67.5" r="5.5" fill="#F1F6F4" stroke="#FFC801" strokeWidth="2.5" />
-              <circle cx="50" cy="85" r="5.5" fill="#F1F6F4" stroke="#FFC801" strokeWidth="2.5" />
-              <circle cx="19.7" cy="67.5" r="5.5" fill="#F1F6F4" stroke="#FFC801" strokeWidth="2.5" />
-              <circle cx="19.7" cy="32.5" r="5.5" fill="#F1F6F4" stroke="#FFC801" strokeWidth="2.5" />
-              
-              <defs>
-                <radialGradient id="logoGlowFooter" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stopColor="#FFC801" />
-                  <stop offset="100%" stopColor="#FF9932" />
-                </radialGradient>
-              </defs>
+            <svg className="w-6 h-6 text-[#114C5A]" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8.372 1.349a.75.75 0 0 0-.744 0l-4.81 2.748L8 7.131l5.182-3.034zM14 5.357L8.75 8.43v6.005l4.872-2.784A.75.75 0 0 0 14 11zm-6.75 9.078V8.43L2 5.357V11c0 .27.144.518.378.651z"/>
             </svg>
             <span className="font-mono text-sm tracking-wider text-[#114C5A] font-bold">
               AETHER
