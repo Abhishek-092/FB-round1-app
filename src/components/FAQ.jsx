@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 
 const FAQS = [
   {
@@ -23,7 +23,7 @@ const FAQS = [
   }
 ];
 
-export default function FAQ() {
+function FAQ() {
   const [openIdx, setOpenIdx] = useState(null);
 
   const toggle = (idx) => {
@@ -60,6 +60,7 @@ export default function FAQ() {
               >
                 {/* Accordion header button */}
                 <button
+                  type="button"
                   onClick={() => toggle(idx)}
                   className="w-full p-6 flex items-center justify-between text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#FFC801]"
                   aria-expanded={isOpen}
@@ -108,3 +109,5 @@ export default function FAQ() {
     </section>
   );
 }
+
+export default memo(FAQ);
