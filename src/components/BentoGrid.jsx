@@ -39,6 +39,13 @@ const BrokerIcon = (props) => (
   </svg>
 );
 
+// DeliveryIcon → cube-16-solid: represents destination delivery / transactional commits
+const DeliveryIcon = (props) => (
+  <svg viewBox="0 0 16 16" fill="currentColor" {...props}>
+    <path d="M8.372 1.349a.75.75 0 0 0-.744 0l-4.81 2.748L8 7.131l5.182-3.034zM14 5.357L8.75 8.43v6.005l4.872-2.784A.75.75 0 0 0 14 11zm-6.75 9.078V8.43L2 5.357V11c0 .27.144.518.378.651z"/>
+  </svg>
+);
+
 const ChevronDownIcon = (props) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
     <path d="m19.5 8.25l-7.5 7.5l-7.5-7.5"/>
@@ -95,6 +102,16 @@ const FEATURES = [
     metric: '12M ops/sec peak capacity',
     colorClass: 'border-[#D9E8E2] hover:bg-[#D9E8E2]/20',
     svgType: 'broker'
+  },
+  {
+    id: 'commit',
+    icon: DeliveryIcon,
+    label: 'OUTFLOW_COMMIT',
+    title: 'Multi-Destination Commit',
+    description: 'Dispatch cleaned and enriched payloads to databases, lakes, and vectors simultaneously. Built-in transaction logic ensures zero message loss.',
+    metric: '<1.2ms commit speed',
+    colorClass: 'border-[#114C5A] hover:bg-[#D9E8E2]/25',
+    svgType: 'commit'
   }
 ];
 
@@ -222,6 +239,52 @@ function BentoGrid() {
             >
               <animate attributeName="stroke-dashoffset" values="100;0" dur="1.5s" repeatCount="indefinite" />
             </path>
+          </svg>
+        );
+      case 'commit':
+        return (
+          <svg className="w-full h-full text-[#114C5A]" viewBox="0 0 200 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            {/* Connecting lines */}
+            <line x1="40" y1="50" x2="160" y2="25" stroke="#114C5A" strokeWidth="0.75" strokeDasharray="3" />
+            <line x1="40" y1="50" x2="160" y2="50" stroke="#114C5A" strokeWidth="0.75" strokeDasharray="3" />
+            <line x1="40" y1="50" x2="160" y2="75" stroke="#114C5A" strokeWidth="0.75" strokeDasharray="3" />
+            
+            {/* Left Source Node */}
+            <circle cx="40" cy="50" r="5" fill="#114C5A" />
+            <circle cx="40" cy="50" r="8" stroke="#114C5A" strokeWidth="0.5" strokeDasharray="2" />
+            
+            {/* Right Destination Nodes */}
+            {/* Top Cylinder (DB) */}
+            <g transform="translate(160, 15)">
+              <rect x="0" y="2" width="16" height="16" rx="2" stroke="#114C5A" strokeWidth="1" fill="#F1F6F4" />
+              <line x1="3" y1="6" x2="13" y2="6" stroke="#114C5A" strokeWidth="1" />
+              <line x1="3" y1="10" x2="13" y2="10" stroke="#114C5A" strokeWidth="1" />
+              <line x1="3" y1="14" x2="9" y2="14" stroke="#114C5A" strokeWidth="1" />
+            </g>
+            
+            {/* Middle Cloud/VPC */}
+            <g transform="translate(160, 42)">
+              <rect x="0" y="0" width="16" height="16" rx="2" stroke="#FF9932" strokeWidth="1" fill="#F1F6F4" />
+              <circle cx="8" cy="8" r="3" stroke="#FF9932" strokeWidth="1" />
+            </g>
+
+            {/* Bottom Warehouse/Vector */}
+            <g transform="translate(160, 67)">
+              <rect x="0" y="2" width="16" height="16" rx="2" stroke="#114C5A" strokeWidth="1" fill="#F1F6F4" />
+              <line x1="3" y1="7" x2="13" y2="7" stroke="#114C5A" strokeWidth="1" />
+              <line x1="3" y1="11" x2="13" y2="11" stroke="#FFC801" strokeWidth="1" />
+            </g>
+
+            {/* Animated flowing data packets */}
+            <circle r="2" fill="#FFC801">
+              <animateMotion dur="2.2s" repeatCount="indefinite" path="M 40 50 L 160 25" />
+            </circle>
+            <circle r="2" fill="#FF9932">
+              <animateMotion dur="1.7s" repeatCount="indefinite" path="M 40 50 L 160 50" begin="0.3s" />
+            </circle>
+            <circle r="2" fill="#114C5A">
+              <animateMotion dur="2.5s" repeatCount="indefinite" path="M 40 50 L 160 75" begin="0.7s" />
+            </circle>
           </svg>
         );
       default:
@@ -386,6 +449,36 @@ function BentoGrid() {
             {/* Right: Waveform SVG — occupies 42% width, stretches to full card height */}
             <div className="flex-shrink-0 w-[42%] h-full flex items-center border-l border-[#D9E8E2]/40 pl-8">
               {renderSVG('broker')}
+            </div>
+          </div>
+
+          {/* Card 6: Multi-Destination Commit (Span 2 cols, 1 row - Wide Card) */}
+          <div
+            {...featureCardProps(5)}
+            className={`bento-glow-card col-span-2 row-span-1 border p-8 flex flex-row items-stretch gap-10 text-left cursor-pointer transition-all duration-300 ${
+              activeIndex === 5 ? 'bg-[#D9E8E2]/40 border-[#114C5A]' : 'bg-[#D9E8E2]/15 border-[#D9E8E2]/60'
+            }`}
+          >
+            {/* Left: Text + metric, fills height with flex-col justify-between */}
+            <div className="flex flex-col justify-between flex-1 min-w-0">
+              <div>
+                <span className="font-mono text-[10px] tracking-wider text-[#114C5A] uppercase block mb-1.5">
+                  {FEATURES[5].label}
+                </span>
+                <h3 className="text-xl font-bold text-[#172B36] mb-2 leading-tight">{FEATURES[5].title}</h3>
+                <p className="text-xs text-[#172B36]/70 leading-relaxed line-clamp-3">
+                  {FEATURES[5].description}
+                </p>
+              </div>
+              <div className="flex items-center gap-3 pt-3 border-t border-[#D9E8E2]/60 font-mono">
+                <span className="text-[10px] text-[#172B36]/40 uppercase tracking-wider">COMMIT_LATENCY</span>
+                <span className="text-xs font-bold text-[#FF9932]">{FEATURES[5].metric}</span>
+              </div>
+            </div>
+
+            {/* Right: Flowing SVG — occupies 42% width, stretches to full card height */}
+            <div className="flex-shrink-0 w-[42%] h-full flex items-center border-l border-[#D9E8E2]/40 pl-8">
+              {renderSVG('commit')}
             </div>
           </div>
 
