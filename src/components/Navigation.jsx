@@ -120,8 +120,9 @@ export default function Navigation() {
             {/* Mobile Hamburger Toggle Button */}
             <button
               onClick={toggleMobileMenu}
-              className="md:hidden p-2 text-[#172B36] focus:outline-none"
+              className="md:hidden p-2 text-[#172B36] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFC801] focus-visible:ring-offset-1"
               aria-label="Toggle navigation menu"
+              aria-expanded={mobileMenuOpen}
             >
               {mobileMenuOpen ? (
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-5 h-5">
