@@ -164,6 +164,33 @@
   }
 }
 
+/* Minimalist Logo Animations */
+@keyframes logo-spin-clockwise {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes logo-spin-counter {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+@keyframes logo-pulse-center {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.12); }
+}
+.logo-spin-slow {
+  transform-origin: 50px 50px;
+  animation: logo-spin-clockwise 25s linear infinite;
+}
+.logo-spin-slow-reverse {
+  transform-origin: 50px 50px;
+  animation: logo-spin-counter 35s linear infinite;
+}
+.logo-pulse {
+  transform-origin: 50px 50px;
+  animation: logo-pulse-center 4s ease-in-out infinite;
+}
+
+
 /* Custom premium bento glow hover */
 .bento-glow-card {
   position: relative;
