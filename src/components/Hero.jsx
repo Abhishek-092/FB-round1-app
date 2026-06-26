@@ -1,10 +1,10 @@
 import React from 'react';
 import ThreeScene from './ThreeScene';
 
-// Play triangle icon — no external dependency
+// Play triangle icon — replaced with allowed chevron-right SVG
 const PlayIcon = () => (
-  <svg viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5">
-    <path d="M8 5.14v14l11-7-11-7z" />
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5">
+    <path d="m8.25 4.5l7.5 7.5l-7.5 7.5" />
   </svg>
 );
 
