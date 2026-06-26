@@ -347,14 +347,14 @@ export default function BentoGrid() {
           <div
             onClick={() => setActiveIndex(4)}
             onMouseEnter={() => setActiveIndex(4)}
-            className={`bento-glow-card col-span-2 row-span-1 border p-8 flex flex-row items-center gap-8 text-left cursor-pointer transition-all duration-300 ${
+            className={`bento-glow-card col-span-2 row-span-1 border p-8 flex flex-row items-stretch gap-10 text-left cursor-pointer transition-all duration-300 ${
               activeIndex === 4 ? 'bg-[#D9E8E2]/40 border-[#114C5A]' : 'bg-[#D9E8E2]/15 border-[#D9E8E2]/60'
             }`}
           >
-            {/* Left: Text content */}
-            <div className="flex flex-col justify-between h-full flex-1 min-w-0">
+            {/* Left: Text + metric, fills height with flex-col justify-between */}
+            <div className="flex flex-col justify-between flex-1 min-w-0">
               <div>
-                <span className="font-mono text-[10px] tracking-wider text-[#114C5A] uppercase block mb-1">
+                <span className="font-mono text-[10px] tracking-wider text-[#114C5A] uppercase block mb-1.5">
                   {FEATURES[4].label}
                 </span>
                 <h3 className="text-xl font-bold text-[#172B36] mb-2 leading-tight">{FEATURES[4].title}</h3>
@@ -362,14 +362,14 @@ export default function BentoGrid() {
                   {FEATURES[4].description}
                 </p>
               </div>
-              <div className="flex items-center gap-3 mt-4 font-mono">
+              <div className="flex items-center gap-3 pt-3 border-t border-[#D9E8E2]/60 font-mono">
                 <span className="text-[10px] text-[#172B36]/40 uppercase tracking-wider">INGRESS_CAPACITY</span>
                 <span className="text-xs font-bold text-[#FF9932]">{FEATURES[4].metric}</span>
               </div>
             </div>
 
-            {/* Right: Waveform SVG — fixed height so it never overflows */}
-            <div className="flex-shrink-0 w-[45%]">
+            {/* Right: Waveform SVG — occupies 42% width, stretches to full card height */}
+            <div className="flex-shrink-0 w-[42%] h-full flex items-center border-l border-[#D9E8E2]/40 pl-8">
               {renderSVG('broker', activeIndex === 4)}
             </div>
           </div>
