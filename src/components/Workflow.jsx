@@ -191,8 +191,9 @@ export default function Workflow() {
                   <button
                     key={step.id}
                     onClick={() => setActiveStep(idx)}
-                    className="relative z-10 flex flex-col items-center group focus:outline-none"
+                    className="relative z-10 flex flex-col items-center group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFC801] focus-visible:ring-offset-2"
                     aria-label={`Show details for ${step.title}`}
+                    aria-pressed={isSelected}
                   >
                     {/* Pulsing ring around active node */}
                     <div 
