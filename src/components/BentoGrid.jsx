@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 
 // Custom SVGs requested by judges
 // MeshIcon → link: represents memory sandboxing / isolation
@@ -98,7 +98,7 @@ const FEATURES = [
   }
 ];
 
-export default function BentoGrid() {
+function BentoGrid() {
   const [activeIndex, setActiveIndex] = useState(0);
 
   // Auto-cycle through features so all animations play without any user interaction
@@ -108,6 +108,22 @@ export default function BentoGrid() {
     }, 3000);
     return () => clearInterval(timer);
   }, []);
+
+  const activateFeature = (idx) => setActiveIndex(idx);
+  const featureCardProps = (idx) => ({
+    role: 'button',
+    tabIndex: 0,
+    onClick: () => activateFeature(idx),
+    onMouseEnter: () => activateFeature(idx),
+    onKeyDown: (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        activateFeature(idx);
+      }
+    },
+    'aria-pressed': activeIndex === idx,
+    'aria-label': FEATURES[idx].title
+  });
 
   // SVG Animation components based on features
   const renderSVG = (type, isActive) => {
@@ -241,8 +257,7 @@ export default function BentoGrid() {
           
           {/* Card 1: Distributed Execution Nodes (Span 2 cols, 2 rows) */}
           <div 
-            onClick={() => setActiveIndex(0)}
-            onMouseEnter={() => setActiveIndex(0)}
+            {...featureCardProps(0)}
             className={`bento-glow-card col-span-2 row-span-2 border p-8 flex flex-col justify-between text-left cursor-pointer transition-all duration-300 ${
               activeIndex === 0 ? 'bg-[#D9E8E2]/40 border-[#114C5A]' : 'bg-[#D9E8E2]/15 border-[#D9E8E2]/60'
             }`}
@@ -276,8 +291,7 @@ export default function BentoGrid() {
 
           {/* Card 2: Cognitive Parsing (Span 1 col, 1 row) */}
           <div 
-            onClick={() => setActiveIndex(1)}
-            onMouseEnter={() => setActiveIndex(1)}
+            {...featureCardProps(1)}
             className={`bento-glow-card col-span-1 row-span-1 border p-6 flex flex-col justify-between text-left cursor-pointer transition-all duration-300 ${
               activeIndex === 1 ? 'bg-[#D9E8E2]/40 border-[#114C5A]' : 'bg-[#D9E8E2]/15 border-[#D9E8E2]/60'
             }`}
@@ -297,8 +311,7 @@ export default function BentoGrid() {
 
           {/* Card 3: Memory Sandboxing (Span 1 col, 1 row) */}
           <div 
-            onClick={() => setActiveIndex(2)}
-            onMouseEnter={() => setActiveIndex(2)}
+            {...featureCardProps(2)}
             className={`bento-glow-card col-span-1 row-span-1 border p-6 flex flex-col justify-between text-left cursor-pointer transition-all duration-300 ${
               activeIndex === 2 ? 'bg-[#D9E8E2]/40 border-[#114C5A]' : 'bg-[#D9E8E2]/15 border-[#D9E8E2]/60'
             }`}
@@ -318,8 +331,7 @@ export default function BentoGrid() {
 
           {/* Card 4: Deep Data Enrichment (Span 1 col, 2 rows - Tall Card) */}
           <div 
-            onClick={() => setActiveIndex(3)}
-            onMouseEnter={() => setActiveIndex(3)}
+            {...featureCardProps(3)}
             className={`bento-glow-card col-span-1 row-span-2 border p-8 flex flex-col justify-between text-left cursor-pointer transition-all duration-300 ${
               activeIndex === 3 ? 'bg-[#D9E8E2]/40 border-[#114C5A]' : 'bg-[#D9E8E2]/15 border-[#D9E8E2]/60'
             }`}
@@ -351,8 +363,7 @@ export default function BentoGrid() {
 
           {/* Card 5: High-Throughput Broker (Span 2 cols, 1 row - Wide Card) */}
           <div
-            onClick={() => setActiveIndex(4)}
-            onMouseEnter={() => setActiveIndex(4)}
+            {...featureCardProps(4)}
             className={`bento-glow-card col-span-2 row-span-1 border p-8 flex flex-row items-stretch gap-10 text-left cursor-pointer transition-all duration-300 ${
               activeIndex === 4 ? 'bg-[#D9E8E2]/40 border-[#114C5A]' : 'bg-[#D9E8E2]/15 border-[#D9E8E2]/60'
             }`}
@@ -397,6 +408,7 @@ export default function BentoGrid() {
               >
                 {/* Accordion Header */}
                 <button
+                  type="button"
                   onClick={() => setActiveIndex(idx)}
                   className="w-full p-6 flex items-center justify-between text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#FFC801]"
                   aria-expanded={isOpen}
@@ -451,3 +463,5 @@ export default function BentoGrid() {
     </section>
   );
 }
+
+export default memo(BentoGrid);
