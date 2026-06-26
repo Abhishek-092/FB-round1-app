@@ -340,31 +340,33 @@ export default function BentoGrid() {
           </div>
 
           {/* Card 5: High-Throughput Broker (Span 2 cols, 1 row - Wide Card) */}
-          <div 
+          <div
             onClick={() => setActiveIndex(4)}
             onMouseEnter={() => setActiveIndex(4)}
-            className={`bento-glow-card col-span-2 row-span-1 border p-8 flex flex-col justify-between text-left cursor-pointer transition-all duration-300 ${
+            className={`bento-glow-card col-span-2 row-span-1 border p-8 flex flex-row items-center gap-8 text-left cursor-pointer transition-all duration-300 ${
               activeIndex === 4 ? 'bg-[#D9E8E2]/40 border-[#114C5A]' : 'bg-[#D9E8E2]/15 border-[#D9E8E2]/60'
             }`}
           >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            {/* Left: Text content */}
+            <div className="flex flex-col justify-between h-full flex-1 min-w-0">
               <div>
                 <span className="font-mono text-[10px] tracking-wider text-[#114C5A] uppercase block mb-1">
                   {FEATURES[4].label}
                 </span>
-                <h3 className="text-2xl font-bold text-[#172B36] mb-2">{FEATURES[4].title}</h3>
-                <p className="text-xs text-[#172B36]/70 leading-relaxed">
+                <h3 className="text-xl font-bold text-[#172B36] mb-2 leading-tight">{FEATURES[4].title}</h3>
+                <p className="text-xs text-[#172B36]/70 leading-relaxed line-clamp-3">
                   {FEATURES[4].description}
                 </p>
               </div>
-              <div>
-                {renderSVG('broker', activeIndex === 4)}
+              <div className="flex items-center gap-3 mt-4 font-mono">
+                <span className="text-[10px] text-[#172B36]/40 uppercase tracking-wider">INGRESS_CAPACITY</span>
+                <span className="text-xs font-bold text-[#FF9932]">{FEATURES[4].metric}</span>
               </div>
             </div>
 
-            <div className="pt-4 border-t border-[#D9E8E2] flex justify-between items-center font-mono">
-              <span className="text-[10px] text-[#172B36]/40">INGRESS_CAPACITY</span>
-              <span className="text-xs font-bold text-[#FF9932]">{FEATURES[4].metric}</span>
+            {/* Right: Waveform SVG — fixed height so it never overflows */}
+            <div className="flex-shrink-0 w-[45%]">
+              {renderSVG('broker', activeIndex === 4)}
             </div>
           </div>
 
