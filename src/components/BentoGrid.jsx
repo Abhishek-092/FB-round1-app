@@ -101,7 +101,13 @@ const FEATURES = [
 export default function BentoGrid() {
   const [activeIndex, setActiveIndex] = useState(0);
 
-
+  // Auto-cycle through features so all animations play without any user interaction
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % FEATURES.length);
+    }, 3000);
+    return () => clearInterval(timer);
+  }, []);
   // SVG Animation components based on features
   const renderSVG = (type, isActive) => {
     switch (type) {
