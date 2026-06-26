@@ -31,7 +31,7 @@ export default function FAQ() {
   };
 
   return (
-    <section id="faq" className="py-24 md:py-36 bg-[#F1F6F4] border-b border-[#D9E8E2]">
+    <section id="faq" aria-label="Frequently asked questions" className="py-24 md:py-36 bg-[#F1F6F4] border-b border-[#D9E8E2]">
       <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12">
         
         {/* Left column: Editorial headline */}
@@ -61,8 +61,10 @@ export default function FAQ() {
                 {/* Accordion header button */}
                 <button
                   onClick={() => toggle(idx)}
-                  className="w-full p-6 flex items-center justify-between text-left focus:outline-none"
+                  className="w-full p-6 flex items-center justify-between text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#FFC801]"
                   aria-expanded={isOpen}
+                  aria-controls={`faq-answer-${idx}`}
+                  id={`faq-question-${idx}`}
                 >
                   <span className="text-sm md:text-base font-bold text-[#172B36]">
                     {faq.question}
