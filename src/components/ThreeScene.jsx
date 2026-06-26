@@ -114,9 +114,12 @@ export default function ThreeScene() {
     });
 
     const updateLines = () => {
-      // Clean previous lines if any
+      // Clean previous lines and DISPOSE geometry to prevent GPU memory leak
       const existingLines = scene.getObjectByName('connections');
-      if (existingLines) scene.remove(existingLines);
+      if (existingLines) {
+        existingLines.geometry.dispose(); // critical: prevent per-frame GPU memory leak
+        scene.remove(existingLines);
+      }
 
       const linePositions = [];
       
@@ -246,6 +249,8 @@ export default function ThreeScene() {
       camera.updateProjectionMatrix();
 
       renderer.setSize(width, height);
+      // Update pixel ratio on resize (handles moving between Retina/standard displays)
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     };
 
     window.addEventListener('resize', handleResize);
