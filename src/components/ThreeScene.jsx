@@ -39,10 +39,10 @@ export default function ThreeScene() {
       canvas.height = 64;
       const ctx = canvas.getContext('2d');
       const grad = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
-      grad.addColorStop(0, '#FFC801'); // Primary Accent
-      grad.addColorStop(0.2, 'rgba(255, 200, 1, 0.8)');
-      grad.addColorStop(0.5, 'rgba(255, 153, 50, 0.3)'); // Secondary Accent
-      grad.addColorStop(1, 'rgba(17, 76, 90, 0)'); // Dark primary transparent
+      grad.addColorStop(0, '#FFFFFF'); // Pure white core to allow vertex color multiplication
+      grad.addColorStop(0.2, 'rgba(255, 255, 255, 1.0)');
+      grad.addColorStop(0.5, 'rgba(255, 255, 255, 0.4)');
+      grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
       ctx.fillStyle = grad;
       ctx.beginPath();
       ctx.arc(32, 32, 32, 0, Math.PI * 2);
@@ -96,33 +96,62 @@ export default function ThreeScene() {
     const nodeGeometry = new THREE.BufferGeometry();
     nodeGeometry.setAttribute('position', new THREE.BufferAttribute(nodePositions, 3));
     
+    // Assign Colors: Ingestion (yellow), Processing (orange), Delivery (teal)
+    const nodeColors = new Float32Array(nodeCount * 3);
+    const colors = [
+      new THREE.Color('#FFC801'), // Yellow
+      new THREE.Color('#FF9932'), // Orange
+      new THREE.Color('#114C5A')  // Teal
+    ];
+    for (let i = 0; i < nodeCount; i++) {
+      const color = colors[i % colors.length];
+      nodeColors[i * 3] = color.r;
+      nodeColors[i * 3 + 1] = color.g;
+      nodeColors[i * 3 + 2] = color.b;
+    }
+    nodeGeometry.setAttribute('color', new THREE.BufferAttribute(nodeColors, 3));
+
     const nodeMaterial = new THREE.PointsMaterial({
       size: 1.8,
       map: nodeTexture,
       transparent: true,
       depthWrite: false,
-      blending: THREE.NormalBlending
+      blending: THREE.NormalBlending,
+      vertexColors: true // Multiplies nodeTexture white alpha with vertex colors
     });
     const nodePoints = new THREE.Points(nodeGeometry, nodeMaterial);
     scene.add(nodePoints);
 
     // 3. Setup Connections (Lines between nearby nodes)
     const lineMaterial = new THREE.LineBasicMaterial({
-      color: 0x114C5A, // Dark Primary
+      color: 0x114C5A, // Dark Primary base lines
       transparent: true,
-      opacity: 0.15,
+      opacity: 0.1,
+      depthWrite: false
+    });
+
+    const activeLineMaterial = new THREE.LineBasicMaterial({
+      color: 0xFFC801, // Yellow/Gold Active transmission lines
+      transparent: true,
+      opacity: 0.4,
       depthWrite: false
     });
 
     const updateLines = () => {
-      // Clean previous lines and DISPOSE geometry to prevent GPU memory leak
+      // Clean previous lines
       const existingLines = scene.getObjectByName('connections');
       if (existingLines) {
-        existingLines.geometry.dispose(); // critical: prevent per-frame GPU memory leak
+        existingLines.geometry.dispose();
         scene.remove(existingLines);
+      }
+      const existingActiveLines = scene.getObjectByName('activeConnections');
+      if (existingActiveLines) {
+        existingActiveLines.geometry.dispose();
+        scene.remove(existingActiveLines);
       }
 
       const linePositions = [];
+      const activeLinePositions = [];
       
       // Calculate distances and create connections
       for (let i = 0; i < nodeCount; i++) {
@@ -136,17 +165,33 @@ export default function ThreeScene() {
           
           // Connect nodes that are close to each other
           if (dist < 14) {
-            linePositions.push(p1.x, p1.y, p1.z);
-            linePositions.push(p2.x, p2.y, p2.z);
+            // Randomly separate base connections from active pulsing channels (approx 20% active)
+            if ((i + j) % 5 === 0) {
+              activeLinePositions.push(p1.x, p1.y, p1.z);
+              activeLinePositions.push(p2.x, p2.y, p2.z);
+            } else {
+              linePositions.push(p1.x, p1.y, p1.z);
+              linePositions.push(p2.x, p2.y, p2.z);
+            }
           }
         }
       }
 
-      const lineGeometry = new THREE.BufferGeometry();
-      lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
-      const lineSegments = new THREE.LineSegments(lineGeometry, lineMaterial);
-      lineSegments.name = 'connections';
-      scene.add(lineSegments);
+      if (linePositions.length > 0) {
+        const lineGeometry = new THREE.BufferGeometry();
+        lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
+        const lineSegments = new THREE.LineSegments(lineGeometry, lineMaterial);
+        lineSegments.name = 'connections';
+        scene.add(lineSegments);
+      }
+
+      if (activeLinePositions.length > 0) {
+        const activeLineGeometry = new THREE.BufferGeometry();
+        activeLineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(activeLinePositions, 3));
+        const activeLineSegments = new THREE.LineSegments(activeLineGeometry, activeLineMaterial);
+        activeLineSegments.name = 'activeConnections';
+        scene.add(activeLineSegments);
+      }
     };
 
     updateLines();
@@ -175,16 +220,21 @@ export default function ThreeScene() {
     const bgPoints = new THREE.Points(bgGeometry, bgMaterial);
     scene.add(bgPoints);
 
-    // Mouse parallax tracking
+    // Mouse tracking & repulsion coordinate system
     let targetX = 0;
     let targetY = 0;
     let currentX = 0;
     let currentY = 0;
+    const mouse3D = new THREE.Vector2(999, 999); // Start far offscreen
 
     const handleMouseMove = (event) => {
-      // Calculate normalized coordinates (-1 to 1)
+      // Calculate normalized coordinates (-1 to 1) for camera tilt
       targetX = (event.clientX / window.innerWidth - 0.5) * 6;
       targetY = (event.clientY / window.innerHeight - 0.5) * 4;
+      
+      // Calculate node-space mouse coordinates for push interactions
+      mouse3D.x = (event.clientX / window.innerWidth - 0.5) * 40;
+      mouse3D.y = -(event.clientY / window.innerHeight - 0.5) * 28;
     };
 
     window.addEventListener('mousemove', handleMouseMove);
@@ -199,7 +249,7 @@ export default function ThreeScene() {
 
       const time = clock.getElapsedTime();
 
-      // Slow orbital drift of node positions
+      // Slow orbital drift & mouse interaction of node positions
       const positions = nodePoints.geometry.attributes.position.array;
       for (let i = 0; i < nodeCount; i++) {
         // Apply velocity
@@ -212,10 +262,23 @@ export default function ThreeScene() {
         if (Math.abs(nodes[i].y) > 15) nodeSpeeds[i].y *= -1;
         if (Math.abs(nodes[i].z) > 10) nodeSpeeds[i].z *= -1;
 
-        // Apply slight waves to make it organic
+        // Calculate cursor repulsion on X-Y plane
+        const dxMouse = nodes[i].x - mouse3D.x;
+        const dyMouse = nodes[i].y - mouse3D.y;
+        const distMouse = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
+        
+        let pushX = 0;
+        let pushY = 0;
+        if (distMouse < 9) {
+          const force = (9 - distMouse) * 0.06;
+          pushX = (dxMouse / distMouse) * force;
+          pushY = (dyMouse / distMouse) * force;
+        }
+
+        // Apply slight waves to make it organic + push displacement
         const offset = i * 0.5;
-        positions[i * 3] = nodes[i].x + Math.sin(time * 0.2 + offset) * 0.15;
-        positions[i * 3 + 1] = nodes[i].y + Math.cos(time * 0.25 + offset) * 0.15;
+        positions[i * 3] = nodes[i].x + Math.sin(time * 0.2 + offset) * 0.15 + pushX;
+        positions[i * 3 + 1] = nodes[i].y + Math.cos(time * 0.25 + offset) * 0.15 + pushY;
         positions[i * 3 + 2] = nodes[i].z;
       }
       nodePoints.geometry.attributes.position.needsUpdate = true;
@@ -224,6 +287,15 @@ export default function ThreeScene() {
       frameCount += 1;
       if (frameCount % 12 === 0) {
         updateLines();
+      }
+
+      // Dynamic materials animating
+      nodePoints.material.size = 1.6 + Math.sin(time * 2.8) * 0.2; // organic node breathing
+      bgPoints.material.opacity = 0.45 + Math.sin(time * 1.5) * 0.15; // background stars twinkling
+
+      const activeLines = scene.getObjectByName('activeConnections');
+      if (activeLines) {
+        activeLines.material.opacity = 0.35 + Math.sin(time * 6.0) * 0.15; // high-frequency pulse on active paths
       }
 
       // Subtle mouse follow (lerped camera movement for smooth parallax)
@@ -253,7 +325,6 @@ export default function ThreeScene() {
       camera.updateProjectionMatrix();
 
       renderer.setSize(width, height);
-      // Update pixel ratio on resize (handles moving between Retina/standard displays)
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     };
 
@@ -269,6 +340,11 @@ export default function ThreeScene() {
         connections.geometry.dispose();
         scene.remove(connections);
       }
+      const activeConnections = scene.getObjectByName('activeConnections');
+      if (activeConnections) {
+        activeConnections.geometry.dispose();
+        scene.remove(activeConnections);
+      }
       if (container && renderer.domElement) {
         container.removeChild(renderer.domElement);
       }
@@ -280,6 +356,7 @@ export default function ThreeScene() {
       bgMaterial.dispose();
       bgParticleTexture.dispose();
       lineMaterial.dispose();
+      activeLineMaterial.dispose();
       renderer.dispose();
     };
   }, []);
