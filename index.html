@@ -8,26 +8,36 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#114C5A" />
     <title>AETHER // Autonomous AI Data Automation Platform</title>
     <meta name="description" content="Aether is a premium enterprise AI data automation platform designed for modern engineering teams. Build, orchestrate, and monitor autonomous data pipelines." />
-    
+    <link rel="canonical" href="https://aether.systems/" />
+
     <!-- OpenGraph Metadata -->
     <meta property="og:title" content="AETHER // Autonomous AI Data Automation Platform" />
     <meta property="og:description" content="Orchestrate autonomous data pipelines and workflows with a premium, zero-latency distributed AI network." />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://aether.systems/" />
     <meta property="og:site_name" content="Aether Automation" />
+    <meta property="og:image" content="/web-app-manifest-512x512.png" />
+    <meta property="og:image:width" content="512" />
+    <meta property="og:image:height" content="512" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="AETHER // Autonomous AI Data Automation Platform" />
     <meta name="twitter:description" content="Orchestrate autonomous data pipelines and workflows with a premium, zero-latency distributed AI network." />
-    
-    <!-- Google Fonts -->
+    <meta name="twitter:image" content="/web-app-manifest-512x512.png" />
+
+    <!-- Google Fonts: Inter (300–900) + JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   </head>
   <body class="bg-[#F1F6F4] text-[#172B36] font-sans antialiased overflow-x-hidden">
+    <!-- Skip to main content for keyboard users -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:px-4 focus:py-2 focus:bg-[#114C5A] focus:text-[#FFC801] focus:font-mono focus:text-xs focus:uppercase focus:tracking-widest">
+      Skip to main content
+    </a>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
-
