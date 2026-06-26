@@ -2,8 +2,6 @@ import React from 'react';
 
 // Custom inline SVGs — contextually matched to each security feature
 
-// Custom inline SVGs — contextually matched to each security feature
-
 // KeyIcon → cog-8-tooth
 const KeyIcon = (props) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
