@@ -1,6 +1,12 @@
 import React from 'react';
 import ThreeScene from './ThreeScene';
-import { Play } from 'lucide-react';
+
+// Play triangle icon — no external dependency
+const PlayIcon = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5">
+    <path d="M8 5.14v14l11-7-11-7z" />
+  </svg>
+);
 
 export default function Hero() {
   return (
@@ -42,7 +48,7 @@ export default function Hero() {
               href="#workflow"
               className="flex items-center justify-center gap-3 px-6 py-4 border border-[#114C5A]/20 hover:border-[#114C5A] text-[#172B36] text-xs font-mono uppercase tracking-widest transition-all duration-300 font-bold"
             >
-              <Play size={14} className="fill-[#172B36]" />
+              <PlayIcon />
               Watch Flow (1.8m)
             </a>
           </div>
