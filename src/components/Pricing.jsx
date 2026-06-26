@@ -54,10 +54,14 @@ const PricingCard = React.memo(({ plan, price, symbol, isAnnual }) => {
             <li key={idx} className="flex items-center gap-3">
               <svg 
                 viewBox="0 0 24 24" 
-                fill="currentColor" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2.5" 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
                 className={`w-3.5 h-3.5 flex-shrink-0 ${plan.primary ? 'text-[#FFC801]' : 'text-[#114C5A]'}`}
               >
-                <path fillRule="evenodd" d="M19.902 4.098a3.75 3.75 0 0 0-5.304 0l-4.5 4.5a3.75 3.75 0 0 0 1.035 6.037a.75.75 0 0 1-.646 1.353a5.25 5.25 0 0 1-1.449-8.45l4.5-4.5a5.25 5.25 0 1 1 7.424 7.424l-1.757 1.757a.75.75 0 1 1-1.06-1.06l1.757-1.757a3.75 3.75 0 0 0 0-5.304Zm-7.389 4.267a.75.75 0 0 1 1-.353a5.25 5.25 0 0 1 1.449 8.45l-4.5 4.5a5.25 5.25 0 1 1-7.424-7.424l1.757-1.757a.75.75 0 1 1 1.06 1.06l-1.757 1.757a3.75 3.75 0 1 0 5.304 5.304l4.5-4.5a3.75 3.75 0 0 0-1.035-6.037a.75.75 0 0 1-.354-1Z" clipRule="evenodd"/>
+                <path d="M20 6L9 17l-5-5" />
               </svg>
               <span className="opacity-90">{feature}</span>
             </li>
