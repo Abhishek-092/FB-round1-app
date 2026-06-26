@@ -64,7 +64,7 @@ export default function Navigation() {
               </defs>
             </svg>
             <span className="font-mono text-sm tracking-wider text-[#114C5A] font-bold">
-              AE//THER
+              AETHER
             </span>
           </a>
 
