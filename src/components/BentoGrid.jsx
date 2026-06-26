@@ -269,7 +269,7 @@ function BentoGrid() {
                 {FEATURES[0].description}
               </p>
               <div className="relative">
-                {renderSVG('mesh', activeIndex === 0)}
+                {renderSVG('mesh')}
               </div>
             </div>
 
@@ -339,7 +339,7 @@ function BentoGrid() {
             </div>
 
             <div className="my-4">
-              {renderSVG('enrich', activeIndex === 3)}
+              {renderSVG('enrich')}
               <p className="text-xs text-[#172B36]/70 leading-relaxed mt-4">
                 {FEATURES[3].description}
               </p>
@@ -377,7 +377,7 @@ function BentoGrid() {
 
             {/* Right: Waveform SVG — occupies 42% width, stretches to full card height */}
             <div className="flex-shrink-0 w-[42%] h-full flex items-center border-l border-[#D9E8E2]/40 pl-8">
-              {renderSVG('broker', activeIndex === 4)}
+              {renderSVG('broker')}
             </div>
           </div>
 
@@ -433,7 +433,7 @@ function BentoGrid() {
                       </p>
                       
                       <div className="p-4 bg-[#F1F6F4]/60 border border-[#D9E8E2]/60">
-                        {renderSVG(feature.svgType, isOpen)}
+                        {renderSVG(feature.svgType)}
                       </div>
 
                       <div className="flex justify-between items-center font-mono text-[10px] border-t border-[#D9E8E2]/60 pt-4">
