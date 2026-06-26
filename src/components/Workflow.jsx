@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 
 // Custom SVGs requested by judges
 // IngestionIcon → arrow-path: represents multi-source raw ingest
@@ -93,7 +93,7 @@ const STEPS = [
   }
 ];
 
-export default function Workflow() {
+function Workflow() {
   const [activeStep, setActiveStep] = useState(0);
 
   // Auto loop workflow steps slowly to simulate constant activity (with manual override)
@@ -197,6 +197,7 @@ export default function Workflow() {
 
                 return (
                   <button
+                    type="button"
                     key={step.id}
                     onClick={() => setActiveStep(idx)}
                     className="relative z-10 flex flex-col items-center group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFC801] focus-visible:ring-offset-2"
@@ -235,6 +236,7 @@ export default function Workflow() {
             <div className="grid grid-cols-2 md:grid-cols-5 gap-2 w-full font-mono">
               {STEPS.map((step, idx) => (
                 <button
+                  type="button"
                   key={step.id}
                   onClick={() => setActiveStep(idx)}
                   className={`py-3 text-[10px] font-bold uppercase tracking-wider border text-center transition-all ${
@@ -256,3 +258,5 @@ export default function Workflow() {
     </section>
   );
 }
+
+export default memo(Workflow);
