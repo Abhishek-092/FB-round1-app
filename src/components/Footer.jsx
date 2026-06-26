@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { memo } from 'react';
 
-export default function Footer() {
+function Footer() {
   return (
     <footer className="py-16 bg-[#F1F6F4] text-[#172B36] border-t border-[#D9E8E2]">
       <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-2 md:grid-cols-6 gap-12 text-left">
@@ -71,3 +71,5 @@ export default function Footer() {
     </footer>
   );
 }
+
+export default memo(Footer);
