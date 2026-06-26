@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 const LOGS = [
   {
@@ -27,7 +27,7 @@ const LOGS = [
   }
 ];
 
-export default function Testimonials() {
+function Testimonials() {
   const [primary, ...secondary] = LOGS;
 
   return (
@@ -100,3 +100,5 @@ export default function Testimonials() {
     </section>
   );
 }
+
+export default memo(Testimonials);
