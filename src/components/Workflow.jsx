@@ -27,8 +27,12 @@ const RoutingIcon = (props) => (
 );
 
 const DeliveryIcon = (props) => (
-  <svg viewBox="0 0 16 16" fill="currentColor" {...props}>
-    <path d="M8.372 1.349a.75.75 0 0 0-.744 0l-4.81 2.748L8 7.131l5.182-3.034zM14 5.357L8.75 8.43v6.005l4.872-2.784A.75.75 0 0 0 14 11zm-6.75 9.078V8.43L2 5.357V11c0 .27.144.518.378.651z"/>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M12 2 L21 7 L12 12 L3 7 Z"/>
+    <path d="M12 12 L12 22"/>
+    <path d="M3 7 L3 17"/>
+    <path d="M21 7 L21 17"/>
+    <path d="M3 17 L12 22 L21 17"/>
   </svg>
 );
 
